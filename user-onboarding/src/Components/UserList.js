@@ -38,12 +38,23 @@ const UserList = ({ users }) => {
   const [showPassword, setShowPassWord] = useState({});
 
   const handleClick = e => {
-    setShowPassWord(values => {
-      return {
-        ...values,
-        [e.target.name]: true ? false : true
-      };
-    });
+    e.persist();
+    console.log(e.target.name);
+    if (showPassword[`${e.target.name}`] === true) {
+      setShowPassWord(values => {
+        return {
+          ...values,
+          [e.target.name]: false
+        };
+      });
+    } else {
+      setShowPassWord(values => {
+        return {
+          ...values,
+          [e.target.name]: true
+        };
+      });
+    }
   };
   return (
     <div>
@@ -52,7 +63,7 @@ const UserList = ({ users }) => {
           <p className={classes.pname}>{el.name}</p>
           <p className={classes.pemail}>{el.email}</p>
           <div>
-            {showPassword[`${el.name}`] ? (
+            {showPassword[`show${index}`] ? (
               <p className={classes.ppassword}>{el.password}</p>
             ) : (
               <p className={classes.ppassword}>
@@ -61,11 +72,11 @@ const UserList = ({ users }) => {
             )}
             <button
               key={index}
-              name={el.name}
+              name={`show${index}`}
               value="show"
               onClick={handleClick}
             >
-              Show Password
+              {showPassword[`show${index}`] ? "Hide Password" : "Show Password"}
             </button>
           </div>
 

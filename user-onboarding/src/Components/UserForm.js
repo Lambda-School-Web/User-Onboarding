@@ -94,7 +94,6 @@ const UserForm = ({ values, errors, touched, status, setUsers }) => {
             <Field
               type="checkbox"
               name="tos"
-              checked={values.tos}
               component={Checkbox}
               color="primary"
             />
@@ -126,6 +125,7 @@ const FormikUserForm = withFormik({
       name: name || "",
       email: email || "",
       password: password || "",
+      confirmPassword: confirmPassword || "",
       tos: tos || false,
       role: role || "user"
     };
@@ -142,7 +142,7 @@ const FormikUserForm = withFormik({
       is: val => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf(
         [Yup.ref("password")],
-        "Both password need to be the same"
+        "Both passwords need to be the same."
       )
     }),
     tos: Yup.bool()
